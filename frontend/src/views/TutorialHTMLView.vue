@@ -10,6 +10,7 @@
 
       <!-- 主要内容展示 -->
       <div v-else>
+        <p>Windows 系统中使用<code>Alt + Shift + F</code>美化HTML代码。</p>
         <h2>什么是 HTML?</h2>
         <ul>
           <li>
