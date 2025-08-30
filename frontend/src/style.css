@@ -1,0 +1,6 @@
+/* 背景颜色是黑色 */
+body {
+  background: linear-gradient(rgba(184, 184, 184, 0.5), rgba(184, 184, 184, 0.5)), url("../src/assets/img/rainbow.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+}
