@@ -9,19 +9,19 @@ jobs:
   build-and-deploy:
     runs-on: self-hosted
     
-    # 指定所有步骤默认使用PowerShell
+    # 1. 关键改动：指定所有步骤默认使用 Windows PowerShell
     defaults:
       run:
-        shell: pwsh
+        shell: powershell
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 1. 使用 PowerShell 语法获取日期并设置输出
+      # 2. PowerShell 语法保持不变，它在两个版本中都兼容
       - name: Get current date for image tag
         id: date
-        run: echo "date=$(Get-Date -Format "yyyyMMddHHmmss")" >> $env:GITHUB_OUTPUT
+        run: echo "date=$(Get-Date -Format "yyyyMMddHHmmss")" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
 
       - name: Build Backend Docker Image
         run: |
@@ -35,11 +35,12 @@ jobs:
         run: |
           kubectl apply -f k8s/
       
-      # 2. kubectl命令在PowerShell中同样适用
       - name: Update Backend Deployment Image
         run: |
+          # kubectl patch 命令中的 JSON 字符串在 Windows PowerShell 中需要转义，最安全的方式是将其放入变量中
+          $patch = '{"spec":{"template":{"spec":{"initContainers":[{"name": "db-migration", "image":"backend-image:${{ steps.date.outputs.date }}"}]}}}}'
           kubectl set image deployment/backend-deployment backend=backend-image:${{ steps.date.outputs.date }} -n vue-django-app
-          kubectl patch deployment backend-deployment -n vue-django-app --patch '{"spec":{"template":{"spec":{"initContainers":[{"name": "db-migration", "image":"backend-image:${{ steps.date.outputs.date }}"}]}}}}'
+          kubectl patch deployment backend-deployment -n vue-django-app --patch $patch
 
       - name: Update Frontend Deployment Image
         run: |
