@@ -3,11 +3,10 @@
         <NavBar></NavBar>
         <!-- 增加一个容器并设置一些内边距，避免内容紧贴浏览器边缘 -->
         <div class="content-container">
-            <h1>Git 介绍</h1>
+            <h1>Git/Docker 介绍</h1>
             <!-- 加载与错误状态处理 -->
             <div v-if="loading">加载中...</div>
             <div v-else-if="error">{{ error }}</div>
-
             <!-- 主要内容展示 -->
             <div v-else>
                 <h2>什么是 Git?</h2>
@@ -25,8 +24,8 @@
                 <h2>Git 常用操作</h2>
 
                 <h3>Git 创建仓库(以远程仓库主分支master为例)</h3>
-                <p>方案一：在Gitee创建仓库并克隆到本地：</p>
-                <p>现在Gitee上创建仓库，<b>注意：master是主分支，不是仓库名。仓库名需要手动命名！</b></p>
+                <p>方案一：在Github创建仓库并克隆到本地：</p>
+                <p>现在Github上创建仓库，<b>注意：master是主分支，不是仓库名。仓库名需要手动命名！</b></p>
                 <p><code>git clone &lt;remote_url&gt; [local_dir_name]</code></p>
                 <p><code>cd ./master</code></p>
 
@@ -38,712 +37,536 @@
 
                 <h3>Git 修改提交</h3>
                 <p><code>git add &lt;file_name&gt;</code> # 将指定文件加入暂存区</p>
+                <p><b>注意</b>：Linux使用LF换行符<code>\n</code>，而Windows使用CRLF换行符<code>\r\n</code>。在Windows系统上使用该命令会报警告，自动将CRLF换行符转换为LF换行符。</p>
                 <p><code>git add .</code> # 将所有修改加入暂存区</p>
                 <p><code>git commit -m "&lt;message&gt;"</code> # 提交修改</p>
                 <p><code>git push -u origin "master"</code> # 第一次推送时需要使用-u参数指定远程分支</p>
                 <p><code>git push</code> # 后续推送只需要git push即可</p>
 
-                <h2>常用 HTML 标签</h2>
-                <p>以下是构建网页内容时最常用的标签分类：</p>
+                <h2>Docker 名词</h2>
+                <p>以下是Docker常用名词与概念：</p>
 
-                <h3>文本内容标签</h3>
-                <ul>
-                    <li><code>&lt;h1&gt;</code> - <code>&lt;h6&gt;</code>: 定义一到六级标题，<code>&lt;h1&gt;</code> 最重要。</li>
-                    <li><code>&lt;p&gt;</code>: 定义一个段落。</li>
-                    <li><code>&lt;div&gt;</code>: 定义一个块级容器，常用于组合其他元素进行布局。</li>
-                    <li><code>&lt;span&gt;</code>: 定义一个内联容器，常用于包裹一小段文本进行样式设置。</li>
-                    <li><code>&lt;blockquote&gt;</code>: 定义一个长的引用块。</li>
-                    <li><code>&lt;pre&gt;</code>: 定义预格式化的文本，会保留文本中的空格和换行符。</li>
-                </ul>
+                <p><b>Dockerfile</b>：纯文本文件，包含一系列指令与参数，用于逐步构建Docker镜像。</p>
+                <p><b>镜像(Image)</b>：只读模版，可以理解为一个打包了运行环境的文件系统，不包含任何动态数据。它包含了运行某个软件所需的所有内容：代码、运行时环境、库、环境变量和配置文件，<b>既不包含运行环境所需的操作系统内核，又不共享宿主机的操作系统内核</b>。</p>
+                <p><b>容器(Container)</b>：运行中的镜像，可以理解为一个运行中的实例。<b>容器共享宿主机的操作系统内核</b>。容器运行时，会在镜像的只读层之上创建一个可写的容器层。</p>
+                <p><b>Kubernetes(简称K8s)</b>：一个开源的容器集群管理系统，用于管理容器化应用。没有Kubernetes时，需要依次启动数据库容器MySQL、后端容器Python和前端容器Nginx，而有Kubernetes时可以大大简化流程。</p>
+                <p><b>pod</b>：Kubernetes中的最小调度和管理单位，包含一个或多个共享资源的容器。</p>
 
-                <h3>文本格式标签</h3>
-                <p>这些标签用于赋予文本特殊的含义或样式。推荐优先使用有语义的标签。</p>
-                <ul>
-                    <li><code>&lt;b&gt;</code>: <b>粗体文本</b> (纯视觉样式)。</li>
-                    <li><code>&lt;strong&gt;</code>: <strong>重要文本</strong> (语义上强调)。</li>
-                    <li><code>&lt;i&gt;</code>: <i>斜体文本</i> (纯视觉样式)。</li>
-                    <li><code>&lt;em&gt;</code>: <em>强调文本</em> (语义上强调)。</li>
-                    <li><code>&lt;mark&gt;</code>: <mark>标记或高亮</mark>的文本。</li>
-                    <li><code>&lt;code&gt;</code>: <code>一段计算机代码</code>。</li>
-                    <li><code>&lt;sub&gt;</code>: <sub>下标</sub>文本, <code>&lt;sup&gt;</code>: <sup>上标</sup>文本。</li>
-                </ul>
+                <h2>Docker 命令</h2>
 
-                <h3>多媒体标签</h3>
-                <ul>
-                    <li><code>&lt;img&gt;</code>: 嵌入一张图片。</li>
-                    <li><code>&lt;audio&gt;</code>: 嵌入音频内容。</li>
-                    <li><code>&lt;video&gt;</code>: 嵌入视频内容。</li>
-                </ul>
-
-                <h3>超链接标签</h3>
-                <ul>
-                    <li><code>&lt;a&gt;</code>: 创建一个可以点击并跳转到其他页面的超链接。</li>
-                </ul>
-
-                <h3>列表标签</h3>
-                <ul>
-                    <li><code>&lt;ul&gt;</code>: 无序列表 (unordered list)，列表项前通常是项目符号。</li>
-                    <li><code>&lt;ol&gt;</code>: 有序列表 (ordered list)，列表项前通常是数字或字母。</li>
-                    <li><code>&lt;li&gt;</code>: 列表项 (list item)，用于 <code>&lt;ul&gt;</code> 和 <code>&lt;ol&gt;</code> 中。
-                    </li>
-                    <li><code>&lt;dl&gt;</code>: 定义列表 (description list)，包含术语和描述。</li>
-                </ul>
-
-                <h3>表格标签</h3>
-                <ul>
-                    <li><code>&lt;table&gt;</code>: 定义一个表格。</li>
-                    <li><code>&lt;thead&gt;</code>: 定义表格的表头部分。</li>
-                    <li><code>&lt;tbody&gt;</code>: 定义表格的主体部分。</li>
-                    <li><code>&lt;tr&gt;</code>: 定义表格中的一行 (table row)。</li>
-                    <li><code>&lt;th&gt;</code>: 定义表头单元格 (table header)。</li>
-                    <li><code>&lt;td&gt;</code>: 定义一个标准数据单元格 (table data)。</li>
-                </ul>
-
-                <h3>表单标签</h3>
-                <ul>
-                    <li><code>&lt;form&gt;</code>: 定义一个用于用户输入的表单区域。</li>
-                    <li><code>&lt;input&gt;</code>: 定义一个输入控件，类型多样（如 text, password, checkbox, radio, submit 等）。</li>
-                    <li><code>&lt;textarea&gt;</code>: 定义一个多行文本输入区域。</li>
-                    <li><code>&lt;button&gt;</code>: 定义一个可点击的按钮。</li>
-                    <li><code>&lt;select&gt;</code>: 定义一个下拉选择框。</li>
-                    <li><code>&lt;label&gt;</code>: 为表单控件定义标注，提升可访问性。</li>
-                </ul>
-
-                <h3>语义标签 (HTML5)</h3>
-                <p>这些标签不带来特殊的视觉效果，但能清晰地描述其内容的结构和含义，对 SEO 和可访问性非常重要。</p>
-                <ul>
-                    <li><code>&lt;header&gt;</code>: 定义文档或某个区域的页眉。</li>
-                    <li><code>&lt;footer&gt;</code>: 定义文档或某个区域的页脚。</li>
-                    <li><code>&lt;nav&gt;</code>: 定义导航链接区域。</li>
-                    <li><code>&lt;main&gt;</code>: 定义页面的主要核心内容。</li>
-                    <li><code>&lt;section&gt;</code>: 定义文档中的一个章节或区域。</li>
-                    <li><code>&lt;article&gt;</code>: 定义一篇独立的、完整的内容，如博客文章。</li>
-                    <li><code>&lt;aside&gt;</code>: 定义侧边栏内容。</li>
-                </ul>
-
-                <h2>全局属性 (Global Attributes)</h2>
-                <p>全局属性是所有HTML标签都可以使用的通用属性，它们为元素提供了基本的功能和标识。</p>
-                <ul>
-                    <li><code>id</code>: 为元素定义一个在整个文档中唯一的标识符。主要用于JavaScript获取元素和CSS选择器。<b>同一页面不允许出现两个相同id！</b></li>
-                    <li><code>class</code>: 为元素指定一个或多个类名（用空格分隔）。主要用于CSS选择器和JavaScript批量获取元素。</li>
-                    <li><code>style</code>: 直接在元素上应用内联CSS样式（不推荐大量使用，应优先使用外部样式表）。</li>
-                    <li><code>title</code>: 提供关于元素的额外信息，通常在鼠标悬停时以提示框形式显示。</li>
-                    <li><code>lang</code>: 指定元素内容的语言。</li>
-                    <li><code>hidden</code>: 一个布尔属性，用于隐藏元素。</li>
-                </ul>
-
-                <h2>标签专有属性 (Tag-specific Attributes)</h2>
-                <p>与全局属性不同，专有属性仅适用于特定的一个或一类标签，用于定义该标签独有的行为或特性。</p>
-                <ul>
-                    <li><code>&lt;a&gt;</code> 标签的 <b><code>href</code></b> 属性，用于指定链接的目标URL；<b><code>target</code></b>
-                        属性，用于指定在何处打开链接，如<code>target="_blank"</code>，在新标签页中打开；<code>target="_self"</code>，在本页面打开。</li>
-                    <li><code>&lt;img&gt;</code> 标签的 <b><code>src</code></b> (图片源) 和 <b><code>alt</code></b> (替代文本) 属性。
-                    </li>
-                    <li><code>&lt;form&gt;</code> 标签的 <b><code>action</code></b> (提交地址) 和 <b><code>method</code></b>
-                        (提交方法，如GET/POST) 属性。</li>
-                    <li><code>&lt;input&gt;</code> 标签的 <b><code>type</code></b>, <b><code>placeholder</code></b>,
-                        <b><code>value</code></b> 等属性。</li>
-                    <li><code>&lt;video&gt;</code> 标签的 <b><code>controls</code></b> (显示播放控件) 和
-                        <b><code>autoplay</code></b> (自动播放) 属性。</li>
-                </ul>
-
-                <h2>CSS 介绍</h2>
-                <p>CSS，全称层叠样式表 (<b>C</b>ascading <b>S</b>tyle <b>S</b>heets)，是用于定义 HTML 元素在屏幕、打印或其他媒介上如何显示的语言。CSS
-                    的核心作用是将<b>内容（HTML）</b>与<b>表现（样式）</b>分离，这使得代码更易于维护、重用和管理。</p>
-
-                <h3>CSS 的三种使用方式</h3>
-                <p>在网页中引入 CSS 有三种主要方法。在 Vue 单文件组件中，我们主要使用第三种方式的变体。</p>
-                <ol>
-                    <li>
-                        <b>外部样式表 (External CSS)</b>：
-                        将所有 CSS 规则写在一个独立的 <code>.css</code> 文件中，然后通过 <code>&lt;link&gt;</code> 标签在 HTML 的
-                        <code>&lt;head&gt;</code> 部分引入。这是最推荐的方式，因为它实现了最佳的内容与表现分离。
-                        <br>
-                        <code>&lt;link rel="stylesheet" type="text/css" href="mystyle.css"&gt;</code>
-                        <br>
-                        在
-                    </li>
-                    <li>
-                        <b>内部样式表 (Internal CSS)</b>：
-                        将 CSS 规则直接写在 HTML 文档的 <code>&lt;head&gt;</code> 部分的 <code>&lt;style&gt;</code>
-                        标签内。这种方式适用于单个页面需要特殊样式的情况。
-                        <br>
-                        <code>&lt;style&gt; body { background-color: linen; } &lt;/style&gt;</code>
-                    </li>
-                    <li>
-                        <b>内联样式 (Inline CSS)</b>：
-                        通过标签的 <code>style</code> 属性直接将样式应用于单个元素。这种方式的优先级最高，但会使 HTML 结构混乱，应尽量避免。
-                        <br>
-                        <code>&lt;h1 style="color:blue; text-align:center;"&gt;这是一个蓝色居中的标题&lt;/h1&gt;</code>
-                    </li>
-                </ol>
-                <p>在 Vue 组件中，我们通常将样式写在 <code>&lt;style&gt;</code> 块中，这类似于内部样式表，但 Vue 提供了 <code>scoped</code>
-                    属性，可以使样式仅作用于当前组件，避免全局污染。</p>
-
-                <h3>CSS 语法</h3>
-                <p>一条 CSS 规则由一个<b>选择器 (Selector)</b> 和一个<b>声明块 (Declaration Block)</b> 组成。</p>
-                <ul>
-                    <li>
-                        <b>选择器</b>：指向你想要设置样式的 HTML 元素。
-                    </li>
-                    <li>
-                        <b>声明块</b>：包含在花括号 <code>{}</code> 中，由一个或多个用分号 <code>;</code> 分隔的声明组成。
-                    </li>
-                    <li>
-                        <b>声明</b>：由一个 CSS <b>属性 (Property)</b> 和一个<b>值 (Value)</b> 组成，中间用冒号 <code>:</code> 分隔。
-                    </li>
-                </ul>
-                <p><b>示例</b>：<code>p { color: red; font-size: 16px; }</code></p>
-                <ul>
-                    <li><code>p</code> 是选择器。</li>
-                    <li><code>{ color: red; font-size: 16px; }</code> 是声明块。</li>
-                    <li><code>color: red;</code> 和 <code>font-size: 16px;</code> 是两条声明。</li>
-                </ul>
-
-                <h3>CSS 选择器</h3>
-                <p>选择器是 CSS 的核心，它能精确地选中需要应用样式的元素。</p>
-                <h4>基础选择器</h4>
-                <ul>
-                    <li><b>元素选择器</b> (Type Selector): 选择指定类型的 HTML 元素。示例：<code>h1 { ... }</code></li>
-                    <li><b>类选择器</b> (Class Selector): 选择带有特定 <code>class</code> 属性的元素。以点 <code>.</code>
-                        开头。示例：<code>.highlight { ... }</code></li>
-                    <li><b>ID 选择器</b> (ID Selector): 选择带有特定 <code>id</code> 属性的元素。以井号 <code>#</code> 开头。ID
-                        在整个页面中必须是唯一的。示例：<code>#main-content { ... }</code></li>
-                    <li><b>通用选择器</b> (Universal Selector): 选择所有元素。以星号 <code>*</code>
-                        表示。示例：<code>* { box-sizing: border-box; }</code></li>
-                    <li><b>属性选择器</b> (Attribute Selector): 根据元素的属性或属性值来选择。示例：<code>a[target="_blank"] { ... }</code>
-                    </li>
-                </ul>
-                <h4>组合选择器</h4>
-                <ul>
-                    <li><b>后代选择器</b> (Descendant Combinator) (空格): 选择某元素内部的所有后代元素。示例：<code>div p { ... }</code> (选中所有
-                        <code>&lt;div&gt;</code> 内的 <code>&lt;p&gt;</code>)</li>
-                    <li><b>子代选择器</b> (Child Combinator) (<code>&gt;</code>):
-                        只选择某元素的直接子元素。示例：<code>ul &gt; li { ... }</code> (只选中 <code>&lt;ul&gt;</code> 的第一级
-                        <code>&lt;li&gt;</code>)</li>
-                    <li><b>相邻兄弟选择器</b> (Adjacent Sibling) (<code>+</code>):
-                        选择紧接在另一个元素后的同级元素。示例：<code>h2 + p { ... }</code> (选中紧跟在 <code>&lt;h2&gt;</code> 后的第一个
-                        <code>&lt;p&gt;</code>)</li>
-                    <li><b>通用兄弟选择器</b> (General Sibling) (<code>~</code>):
-                        选择在另一个元素之后的所有同级元素。示例：<code>h2 ~ p { ... }</code> (选中 <code>&lt;h2&gt;</code> 之后的所有同级
-                        <code>&lt;p&gt;</code> 元素)</li>
-                </ul>
-                <h4>伪类与伪元素</h4>
-                <ul>
-                    <li><b>伪类 (Pseudo-classes)</b>: 用于定义元素的特殊状态。以一个冒号 <code>:</code> 开头。
-                        <ul>
-                            <li>用户行为伪类：<code>:hover</code> (鼠标悬停), <code>:active</code> (被激活), <code>:focus</code>
-                                (获得焦点)。</li>
-                            <li>结构性伪类：<code>:first-child</code>, <code>:last-child</code>, <code>:nth-child(n)</code>
-                                (选中第n个子元素)。</li>
-                        </ul>
-                    </li>
-                    <li><b>伪元素 (Pseudo-elements)</b>: 用于为元素的特定部分设置样式。以两个冒号 <code>::</code> 开头。
-                        <ul>
-                            <li><code>::before</code>: 在元素内容之前插入内容。</li>
-                            <li><code>::after</code>: 在元素内容之后插入内容。</li>
-                            <li><code>::first-letter</code> (首字母), <code>::first-line</code> (首行)。</li>
-                        </ul>
-                    </li>
-                </ul>
-
-                <h3>CSS 盒模型 (Box Model)</h3>
-                <p>在 CSS 中，所有 HTML 元素都可以看作是一个个的盒子。盒模型描述了这些盒子占用的空间，它由四个部分组成：</p>
-                <img src="https://www.runoob.com/images/box-model.gif" alt="CSS Box Model"
-                    style="max-width: 100%; height: auto;">
-                <ul>
-                    <li><b>Content (内容)</b>: 盒子的核心，显示文本和图像。由 <code>width</code> 和 <code>height</code> 属性控制。</li>
-                    <li><b>Padding (内边距)</b>: 包围在内容区域外部的透明区域。</li>
-                    <li><b>Border (边框)</b>: 包围在内边距外部的区域。</li>
-                    <li><b>Margin (外边距)</b>: 包围在边框外部的透明区域，用于控制元素与其他元素之间的距离。</li>
-                </ul>
-                <p>一个重要的相关属性是 <code>box-sizing</code>。默认值为 <code>content-box</code>，意味着 <code>width</code> 和
-                    <code>height</code> 只包括内容区。将其设置为 <code>border-box</code> (推荐) 后，<code>width</code> 和
-                    <code>height</code> 将包括内容、内边距和边框，这使得布局计算更加直观。</p>
-
-                <h3>常用 CSS 属性</h3>
-                <h4>文本与字体</h4>
-                <ul>
-                    <li><code>color</code>: 设置文本颜色。</li>
-                    <li><code>font-family</code>: 设置字体，可以提供一个备用字体列表。</li>
-                    <li><code>font-size</code>: 设置字体大小。</li>
-                    <li><code>font-weight</code>: 设置字体粗细 (如 <code>normal</code>, <code>bold</code>)。</li>
-                    <li><code>text-align</code>: 设置文本的水平对齐方式 (如 <code>left</code>, <code>center</code>,
-                        <code>right</code>)。</li>
-                    <li><code>line-height</code>: 设置行高。</li>
-                </ul>
-                <h4>背景</h4>
-                <ul>
-                    <li><code>background-color</code>: 设置元素的背景颜色。</li>
-                    <li><code>background-image</code>: 设置元素的背景图片。</li>
-                    <li><code>background-repeat</code>: 控制背景图片是否重复。</li>
-                    <li><code>background-position</code>: 设置背景图片的起始位置。</li>
-                </ul>
-                <h4>布局与定位</h4>
-                <ul>
-                    <li><b><code>display</code></b>: 这是最重要的布局属性之一。
-                        <ul>
-                            <li><code>block</code>: 元素会独占一行，可以设置宽高。如 <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>。
-                            </li>
-                            <li><code>inline</code>: 元素不会独占一行，宽高由内容决定。如 <code>&lt;span&gt;</code>,
-                                <code>&lt;a&gt;</code>。</li>
-                            <li><code>inline-block</code>: 结合了两者的优点，不独占一行但可以设置宽高。</li>
-                            <li><code>flex</code>: 启用弹性盒子布局 (Flexbox)，非常适合一维布局（行或列）。</li>
-                            <li><code>grid</code>: 启用网格布局 (Grid)，非常适合二维布局（行和列）。</li>
-                            <li><code>none</code>: 隐藏元素，且不占用任何空间。</li>
-                        </ul>
-                    </li>
-                    <li><b><code>position</code></b>: 定义元素的定位机制。
-                        <ul>
-                            <li><code>static</code>: 默认值，元素在正常的文档流中。</li>
-                            <li><code>relative</code>: 相对定位，元素相对于其正常位置进行偏移，但仍在文档流中占据原始空间。</li>
-                            <li><code>absolute</code>: 绝对定位，元素相对于最近的非 <code>static</code> 定位的祖先元素进行定位，并脱离文档流。</li>
-                            <li><code>fixed</code>: 固定定位，元素相对于浏览器视口进行定位，即使页面滚动也保持不动。</li>
-                        </ul>
-                    </li>
-                    <li><code>width</code>, <code>height</code>: 设置元素的宽度和高度。</li>
-                    <li><code>margin</code>, <code>padding</code>: 设置外边距和内边距。</li>
-                </ul>
-
-                <h3>层叠与优先级 (Cascade and Specificity)</h3>
-                <p>CSS 的强大之处在于其“层叠”特性。当多个样式规则应用于同一个元素时，浏览器会根据一套优先级规则来决定最终应用哪个样式。</p>
-                <ol>
-                    <li><b>来源顺序</b>: 浏览器默认样式 &lt; 用户样式表 &lt; 开发者样式表。</li>
-                    <li><b>优先级 (Specificity)</b>: 在开发者样式表中，选择器的特殊性决定了哪条规则生效。优先级从高到低为：
-                        <ul>
-                            <li>内联样式 (<code>style="..."</code>)</li>
-                            <li>ID 选择器 (<code>#id</code>)</li>
-                            <li>类选择器 (<code>.class</code>)、属性选择器 (<code>[type="..."]</code>)、伪类 (<code>:hover</code>)
-                            </li>
-                            <li>元素选择器 (<code>div</code>)、伪元素 (<code>::before</code>)</li>
-                        </ul>
-                        <p>一个选择器的优先级越高，其样式就越难被覆盖。</p>
-                    </li>
-                    <li><b><code>!important</code></b>:
-                        这是一个特殊的标记，可以附加到任何属性声明的末尾，使其拥有最高的优先级，能够覆盖任何其他样式。<strong>警告：应极力避免使用
-                            <code>!important</code></strong>，因为它会破坏样式的自然层叠规则，使调试变得非常困难。</li>
-                </ol>
-
-                <h2>Vue 中使用 HTML 的注意点</h2>
-                <p>在 Vue 组件的 <code>&lt;template&gt;</code> 中，我们虽然在写 HTML，但 Vue 提供了一些强大的增强功能和规则：</p>
-                <ul>
-                    <li>
-                        <b>数据绑定</b>：使用双大括号 <code>{{ }}</code> (称为“Mustache”语法) 可以将 `script` 部分的数据直接显示在 HTML
-                        中。例如：<code>&lt;h1&gt;{{ pageTitle }}&lt;/h1&gt;</code>。
-                    </li>
-                    <li>
-                        <b>Attribute 绑定</b>：HTML 标签的属性（Attribute）值需要动态绑定时，不能使用双大括号。必须使用 <code>v-bind</code> 指令，通常简写为一个冒号
-                        <code>:</code>。
-                        <br>
-                        <b>示例</b>：<code>&lt;img :src="userAvatarUrl"&gt;</code> 而不是
-                        <code>&lt;img src="{{ userAvatarUrl }}"&gt;</code>。
-                    </li>
-                    <li>
-                        <b>Class 与 Style 绑定</b>：Vue 对 <code>class</code> 和 <code>style</code>
-                        的绑定进行了特殊增强，可以非常方便地根据状态动态改变样式。
-                        <br>
-                        <b>示例</b>：<code>&lt;div :class="{ active: isActive, 'text-danger': hasError }"&gt;&lt;/div&gt;</code>。
-                    </li>
-                    <li>
-                        <b>渲染原始 HTML</b>：为了安全（防止 XSS 跨站脚本攻击），Vue 默认不会渲染数据中的 HTML 标签。如果你确认一段内容是安全的，并希望将其作为 HTML 渲染，必须使用
-                        <code>v-html</code> 指令。
-                        <br>
-                        <b>示例</b>：<code>&lt;div v-html="rawHtmlContent"&gt;&lt;/div&gt;</code>。<b>警告：请务必谨慎使用，因为它可能让你的网站易受攻击。</b>
-                    </li>
-                </ul>
-            </div>
-            <!-- ========== CSS 互动练习区 开始 ========== -->
-            <div class="quiz-section">
-                <h2>HTML &amp; CSS 巩固练习</h2>
-                <p>通过下面的选择题，检验一下你对 HTML 和 CSS 核心概念的理解吧！</p>
-
-                <form class="quiz-form" onsubmit="return false;">
-                    <!-- 问题一 -->
-                    <div class="quiz-question">
-                        <p>问题 1: CSS 优先级与 HTML 语义化</p>
-                        <p>对于以下 HTML 结构和 CSS 规则，哪个描述是 <strong>最不准确</strong> 的？</p>
-                        <pre><code>       &lt;!-- HTML --&gt;
-        &lt;header id="page-header"&gt;...&lt;/header&gt;
-        &lt;div class="content"&gt;...&lt;/div&gt;
-
-        &lt;!-- CSS --&gt;
-        #page-header { background-color: blue; }
-        .content { background-color: white; }</code></pre>
-                        <div class="quiz-options">
-                            <div>
-                                <input type="radio" id="q1-a" name="q1" value="a">
-                                <label for="q1-a">(A) <code>id="page-header"</code> 的样式优先级高于
-                                    <code>class="content"</code>，因为 ID 选择器的权重更高。</label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>这个描述是正确的。ID 选择器 (#) 的优先级权重远高于类选择器 (.)，因此它的样式更难被覆盖。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q1-b" name="q1" value="b">
-                                <label for="q1-b">(B) 为了更好的语义化，应该用 <code>&lt;main&gt;</code> 标签替换
-                                    <code>&lt;div class="content"&gt;</code>。</label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>这个描述是正确的。<code>&lt;main&gt;</code> 是 HTML5
-                                    语义标签，专门用于表示页面的主要内容，比通用的 <code>&lt;div&gt;</code> 具有更明确的含义。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q1-c" name="q1" value="c">
-                                <label for="q1-c">(C) 一个 HTML 页面中可以有多个 <code>class="content"</code> 的元素，但只能有一个
-                                    <code>id="page-header"</code> 的元素。</label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>这个描述是正确的。<code>id</code> 必须是页面唯一的，而 <code>class</code>
-                                    可以被多个元素重复使用。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q1-d" name="q1" value="d">
-                                <label for="q1-d">(D) 因为 <code>&lt;div&gt;</code> 是块级元素，<code>&lt;header&gt;</code>
-                                    是语义标签，所以 <code>&lt;div&gt;</code> 的样式会覆盖 <code>&lt;header&gt;</code> 的样式。</label>
-                                <div class="feedback correct">
-                                    <strong>回答正确！</strong><br>
-                                    <strong>解析：</strong>这个描述是完全错误的。CSS 样式的优先级与标签是块级元素还是语义标签无关，它主要由选择器的特殊性
-                                    (Specificity)、样式来源和 <code>!important</code> 决定。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 问题二 -->
-                    <div class="quiz-question">
-                        <p>问题 2: CSS 盒模型与 `box-sizing`</p>
-                        <p>一个元素应用了以下 CSS 规则。请问，该元素在页面布局中占据的总宽度是多少？</p>
-                        <pre><code>       .item {
-            box-sizing: border-box;
-            width: 300px;
-            padding: 25px;
-            border: 5px solid red;
-            margin: 10px;
-        }</code></pre>
-                        <div class="quiz-options">
-                            <div>
-                                <input type="radio" id="q2-a" name="q2" value="a">
-                                <label for="q2-a">(A) 300px</label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>不正确。300px 只是元素自身的宽度（包括内边距和边框），但它在布局中占据的空间还需要计算外边距 (margin)。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q2-b" name="q2" value="b">
-                                <label for="q2-b">(B) 320px</label>
-                                <div class="feedback correct">
-                                    <strong>回答正确！</strong><br>
-                                    <strong>解析：</strong>此题的关键是 <code>box-sizing: border-box;</code>。
-                                    <br>1. 这个属性意味着 <code>width: 300px;</code> 已经包含了元素的内容、内边距(padding)和边框(border)。
-                                    <br>2. 元素在布局中占据的总宽度 = `width` 属性值 + 左右外边距 (margin) =
-                                    <code>300px + 10px (左) + 10px (右) = 320px</code>。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q2-c" name="q2" value="c">
-                                <label for="q2-c">(C) 360px</label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>不正确。这个结果是在默认的 <code>box-sizing: content-box;</code> 情况下计算 `width
-                                    + padding + border` 得到的 (300+50+10)，但题目中已经指定了 `border-box`。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q2-d" name="q2" value="d">
-                                <label for="q2-d">(D) 380px</label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>不正确。这个结果是错误地将所有值相加 (300+50+10+20)。请记住在 <code>border-box</code>
-                                    模型下，`width` 已经包含了 `padding` 和 `border`。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 问题三 -->
-                    <div class="quiz-question">
-                        <p>问题 3: CSS 选择器组合与伪类</p>
-                        <p>根据下面的 HTML 和 CSS，<code>&lt;li&gt;列表项 2&lt;/li&gt;</code> 的文本颜色最终会是什么？</p>
-                        <pre><code>       &lt;!-- HTML --&gt;
-        &lt;div class="list-container"&gt;
-            &lt;ul&gt;
-                &lt;li&gt;列表项 1&lt;/li&gt;
-                &lt;li class="active"&gt;列表项 2&lt;/li&gt;
-                &lt;li&gt;列表项 3&lt;/li&gt;
-            &lt;/ul&gt;
-        &lt;/div&gt;
-
-        &lt;!-- CSS --&gt;
-        .list-container li { color: blue; } /* 规则 1 */
-        div &gt; ul .active { color: red; }   /* 规则 2 */
-        ul li:hover { color: green; }     /* 规则 3 */
-        li.active { color: purple; }      /* 规则 4 */
-        </code></pre>
-                        <div class="quiz-options">
-                            <div>
-                                <input type="radio" id="q3-a" name="q3" value="a">
-                                <label for="q3-a">(A) 蓝色 (blue)</label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>不正确。虽然规则 1 能选中目标，但它的优先级 (1个类 + 1个元素) 低于其他更具体的规则。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q3-b" name="q3" value="b">
-                                <label for="q3-b">(B) 红色 (red)</label>
-                                <div class="feedback correct">
-                                    <strong>回答正确！</strong><br>
-                                    <strong>解析：</strong>这里考察的是选择器优先级。我们来计算权重：
-                                    <br>• <b>规则 1</b> <code>.list-container li</code>: 1个类 + 1个元素。
-                                    <br>• <b>规则 2</b> <code>div &gt; ul .active</code>: 1个类 + 2个元素。它的特殊性高于规则1和4。
-                                    <br>• <b>规则 3</b> <code>ul li:hover</code>: 1个伪类 + 2个元素。伪类和类的权重相同，但只有在鼠标悬停时才生效。
-                                    <br>• <b>规则 4</b> <code>li.active</code>: 1个类 + 1个元素。
-                                    <br>在非悬停状态下，<b>规则 2</b> 的选择器组合 (div, ul, .active) 最具体，因此优先级最高。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q3-c" name="q3" value="c">
-                                <label for="q3-c">(C) 绿色 (green)</label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>不正确。绿色只会在鼠标悬停 (hover) 在列表项上时才会出现。在默认状态下，更高优先级的规则会生效。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q3-d" name="q3" value="d">
-                                <label for="q3-d">(D) 紫色 (purple)</label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>不正确。虽然规则 4 (<code>li.active</code>) 的优先级高于规则 1，但它低于规则 2
-                                    (<code>div &gt; ul .active</code>)，因为规则 2 的选择器链更长、更具体。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 问题四 -->
-                    <div class="quiz-question">
-                        <p>问题 4: Flexbox 布局应用</p>
-                        <p>小B希望创建一个导航栏，要求 Logo (`.logo`) 靠左显示，导航链接 (`.nav-links`) 作为一个整体靠右显示。下面哪个 CSS 方案是实现该布局的
-                            <strong>最佳</strong> 现代方案？</p>
-                        <pre><code>&lt;!-- HTML --&gt;
-&lt;nav class="navbar"&gt;
-  &lt;div class="logo"&gt;网站Logo&lt;/div&gt;
-  &lt;ul class="nav-links"&gt;
-    &lt;li&gt;&lt;a href="#"&gt;首页&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;关于&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href="#"&gt;联系&lt;/a&gt;&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/nav&gt;
-
-&lt;!-- CSS --&gt;
-/* 待选代码 */
-</code></pre>
-                        <div class="quiz-options">
-                            <div>
-                                <input type="radio" id="q4-a" name="q4" value="a">
-                                <label for="q4-a">(A)
-                                    <code>.navbar { display: flex; justify-content: space-between; }</code></label>
-                                <div class="feedback correct">
-                                    <strong>回答正确！</strong><br>
-                                    <strong>解析：</strong>这是最理想的现代 CSS 方案。
-                                    <br>1. <code>display: flex;</code> 启用弹性盒子布局。
-                                    <br>2. <code>justify-content: space-between;</code> 会将弹性项目（即 logo 和
-                                    nav-links）沿着主轴（默认是水平方向）两端对齐，中间的剩余空间会被平均分配。由于只有两个项目，效果就是将它们推向容器的两端，完美符合要求。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q4-b" name="q4" value="b">
-                                <label for="q4-b">(B)
-                                    <code>.logo { float: left; } .nav-links { float: right; }</code></label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>这个方案在过去很常用，也能实现效果，但不是“最佳”的现代方案。使用浮动（float）布局有一些副作用，比如父容器高度塌陷（需要清除浮动），且在处理垂直居中等复杂对齐时远不如
-                                    Flexbox 灵活。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q4-c" name="q4" value="c">
-                                <label for="q4-c">(C)
-                                    <code>.navbar { display: grid; grid-template-columns: 1fr 1fr; }</code></label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>虽然 Grid 布局很强大，但这个规则会将容器平分成两列，让 Logo
-                                    和导航链接各占一半空间，而不是将它们分别推向容器的两端。对于这种一维的对齐场景，Flexbox 通常更简洁直观。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q4-d" name="q4" value="d">
-                                <label for="q4-d">(D)
-                                    <code>.navbar { display: flex; justify-content: space-around; }</code></label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong><code>space-around</code> 会在每个弹性项目的两侧都留出相等的空间，这意味着 Logo
-                                    的左边和导航链接的右边也会有边距，它们不会紧贴容器边缘，不符合“靠左”和“靠右”的精确要求。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 问题五 -->
-                    <div class="quiz-question">
-                        <p>问题 5: 定位与层级 `z-index`</p>
-                        <p>小C正在制作一个弹窗 (Modal)。他希望这个半透明的遮罩层 (`.modal-overlay`) 能够覆盖页面上包括页眉 (`&lt;header&gt;`)
-                            在内的所有内容，但无论怎么设置，页眉总是显示在遮罩层之上。问题最可能出在哪里？</p>
-                        <pre><code>&lt;!-- HTML --&gt;
-&lt;header&gt;...&lt;/header&gt;
-&lt;main&gt;...&lt;/main&gt;
-&lt;div class="modal-overlay"&gt;...&lt;/div&gt;
-
-&lt;!-- CSS --&gt;
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 10;
-}
-header {
-    /* ... 其他样式 ... */
-}
-</code></pre>
-                        <div class="quiz-options">
-                            <div>
-                                <input type="radio" id="q5-a" name="q5" value="a">
-                                <label for="q5-a">(A) `.modal-overlay` 的 `z-index` 值不够大，可能页眉的 `z-index` 更高。</label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>虽然这是一个可能的原因，但更根本的问题在于 `z-index` 的生效条件。如果页眉没有设置 `position`
-                                    属性，它就不会创建新的层叠上下文，即使它有 `z-index` 也不会和弹窗进行层级比较。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q5-b" name="q5" value="b">
-                                <label for="q5-b">(B) `header` 元素设置了 `position` 属性（如 `relative` 或 `fixed`）以及一个大于 10 的
-                                    `z-index`。</label>
-                                <div class="feedback correct">
-                                    <strong>回答正确！</strong><br>
-                                    <strong>解析：</strong>`z-index` 属性只对设置了 `position` 值（非 `static`）的元素生效。当 `header` 和
-                                    `.modal-overlay` 都被定位后，它们就会在同一个层叠上下文中进行层级比较。如果 `header` 同时设置了 `position` 和一个更高的
-                                    `z-index` (例如 <code>z-index: 999;</code>)，它自然会覆盖 `z-index` 为 10 的遮罩层。这是最常见的问题原因。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q5-c" name="q5" value="c">
-                                <label for="q5-c">(C) 弹窗的 HTML 结构应该放在 `&lt;header&gt;` 标签内部。</label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>将弹窗放入页眉内部在语义和结构上都是不推荐的。而且，由于弹窗使用了 `position:
-                                    fixed`，它已经脱离了正常的文档流，其在 HTML 中的位置对最终的覆盖效果影响不大，关键还是层叠上下文和 `z-index`。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q5-d" name="q5" value="d">
-                                <label for="q5-d">(D) 应该给 `main` 元素设置 `position: relative`。</label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>给 `main` 元素设置定位对此问题没有帮助。弹窗的 `position: fixed`
-                                    是相对于浏览器视口定位的，`main` 元素的定位状态不会影响弹窗与页眉的层级关系。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 问题六 -->
-                    <div class="quiz-question">
-                        <p>问题 6: 响应式设计与媒体查询</p>
-                        <p>小A需要给网页添加一个半透明的背景图片。下面代码中最能实现该功能的是？</p>
-                        <pre><code>.container {
-    background-image: url('path/to/image.jpg');
-    background-size: cover;
-    background-position: center;
+                <h3>hello-Docker</h3>
+                <p>点击右上角“设置”图标，点击“Docker Engine”，将daemon修改为：</p>
+                <pre><code>{
+  "builder": {
+    "gc": {
+      "defaultKeepStorage": "20GB",
+      "enabled": true
+    }
+  },
+  "experimental": false,
+  "registry-mirrors": [
+    "https://docker.xuanyuan.me"
+  ]
 }</code></pre>
-                        <div class="quiz-options">
-                            <div>
-                                <input type="radio" id="q6-a" name="q6" value="a">
-                                <label for="q6-a">(A) <code>opacity: 0.5;</code></label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>不正确。<code>opacity</code>
-                                    属性会使整个元素（包括其所有子元素，如文本、按钮等）都变成半透明，而不仅仅是背景图片。这通常不是我们想要的效果。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q6-b" name="q6" value="b">
-                                <label for="q6-b">(B) <code>background-color: rgba(255, 255, 255, 0.5);</code></label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>不正确。这个属性是给背景添加一个半透明的白色遮罩，但它并不能直接让背景图片本身变半透明。如果图片和颜色同时设置，颜色会作为底色。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q6-c" name="q6" value="c">
-                                <label for="q6-c">(C) 使用一个伪元素（`::before`）来做背景层。</label>
-                                <div class="feedback correct">
-                                    <strong>回答正确！</strong><br>
-                                    <strong>解析：</strong>这是最灵活且无副作用的方法。
-                                    <br>1. 给容器（`.container`）设置 <code>position: relative;</code>。
-                                    <br>2. 创建一个 <code>.container::before</code> 伪元素，设置
-                                    <code>position: absolute; top:0; left:0; width:100%; height:100%;</code> 让它完全覆盖容器。
-                                    <br>3. 将背景图片应用到这个伪元素上，并设置 <code>opacity: 0.5;</code> 和
-                                    <code>z-index: -1;</code>（确保它在内容的下方）。
-                                    <br>这样，只有伪元素（即背景层）是半透明的，而容器内的实际内容（文本等）完全不受影响。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q6-d" name="q6" value="d">
-                                <label for="q6-d">(D) <code>background-blend-mode: overlay;</code></label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong>不正确。<code>background-blend-mode</code>
-                                    用于混合背景图片和背景颜色，可以创造出复杂的视觉效果，但它本身并不能直接控制背景图片的透明度。它需要与 `background-color` 配合使用才能产生效果。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <p>然后点击“Apply & restart”。注意：不要中途退出，否则Docker会停止。</p>
+                <p>然后，点击下方“Terminal”，输入：<code>docker pull busybox:latest</code>(busybox是最小的Linux系统)，会得到：</p>
+                <pre><code>latest: Pulling from library/busybox
+97e70d161e81: Pull complete
+Digest: sha256:37f7b378a29ceb4c551b1b5582e27747b855bbfaa73fa11914fe0df028dc581f
+Status: Downloaded newer image for busybox:latest
+docker.io/library/busybox:latest</code></pre>
+                <p>然后输入<code>docker run --name first_docker_container busybox:latest echo "Hello Docker"</code>，就会得到：<code>Hello Docker</code>。</p>
 
-                    <!-- 问题七 -->
-                    <div class="quiz-question">
-                        <p>问题 7: 伪类选择器的应用</p>
-                        <p>在一个长列表中，为了提高可读性，项目经理希望实现一个“斑马条纹”效果，即列表中所有<strong>偶数行</strong>的 `&lt;li&gt;` 元素都有一个浅灰色的背景。以下哪个
-                            CSS 规则能实现这个需求？</p>
-                        <pre><code>&lt;!-- HTML --&gt;
-&lt;ul class="task-list"&gt;
-  &lt;li&gt;任务一&lt;/li&gt;
-  &lt;li&gt;任务二&lt;/li&gt;
-  &lt;li&gt;任务三&lt;/li&gt;
-  &lt;li&gt;任务四&lt;/li&gt;
-&lt;/ul&gt;</code></pre>
-                        <div class="quiz-options">
-                            <div>
-                                <input type="radio" id="q7-a" name="q7" value="a">
-                                <label for="q7-a">(A)
-                                    <code>.task-list li:nth-child(even) { background-color: #f2f2f2; }</code></label>
-                                <div class="feedback correct">
-                                    <strong>回答正确！</strong><br>
-                                    <strong>解析：</strong><code>:nth-child()</code> 是一个结构性伪类，用于根据元素在其父元素中的位置来选中它。参数
-                                    <code>even</code> (意为“偶数”) 会精确地选中第 2、4、6... 个子元素，完美实现斑马条纹的偶数行样式。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q7-b" name="q7" value="b">
-                                <label for="q7-b">(B)
-                                    <code>.task-list li:last-child { background-color: #f2f2f2; }</code></label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong><code>:last-child</code>
-                                    伪类只会选中父元素下的最后一个子元素。在这个例子中，只有“任务四”会变色，无法形成条纹效果。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q7-c" name="q7" value="c">
-                                <label for="q7-c">(C)
-                                    <code>.task-list li:hover { background-color: #f2f2f2; }</code></label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong><code>:hover</code>
-                                    伪类只在鼠标悬停在元素上时才会生效。这会提供一个交互效果，但不能在默认状态下创建静态的斑马条纹。
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" id="q7-d" name="q7" value="d">
-                                <label for="q7-d">(D)
-                                    <code>.task-list li::after { background-color: #f2f2f2; }</code></label>
-                                <div class="feedback incorrect">
-                                    <strong>解析：</strong><code>::after</code>
-                                    是一个伪元素，不是伪类。它用于在元素内容的后面插入生成的内容，不能用来选择元素本身。给伪元素设置背景色不会影响到 `&lt;li&gt;` 元素本身。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                <p>可见，Docker的使用包含三步：</p>
+                <ol>
+                    <li><b>获取镜像</b>：<code>docker pull [OPTIONS] &lt;仓库名&gt;：&lt;标签&gt;</code>(即<code>[IMAGE]</code>)</li>
+                    <li><b>创建并启动容器</b>：<code>docker run [OPTIONS] [IMAGE] [COMMAND] [ARG...]</code></li>
+                    <li><b>进入容器执行程序</b>：<code>docker exec -it [CONTAINER_ID] [COMMAND]</code></li>
+                </ol>
+                <h3>docker pull 获取镜像</h3>
+                <pre><code>docker pull [OPTIONS] &lt;仓库名&gt;：&lt;标签&gt;
+---------------例如-----------------
+docker pull ubuntu:latest</code></pre>
+                <h3>docker build 构建镜像</h3>
+                <p>docker获取镜像有两种方法：docker pull从仓库获取镜像，或者docker build使用Dockerfile构建镜像。</p>
+                <pre><code>docker build [OPTIONS] &lt;Dockerfile所在目录&gt; # 通常要用 -t 指定镜像名</code></pre>
+                <p>比如：<code>docker build -t ubuntu:latest .</code></p>
+
+                <h3>docker run 运行容器</h3>
+                <p>该命令用于创建一个新的容器并运行一个命令。</p>
+                <pre><code>docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</code></pre>
+                <p>常用选项：</p>
+                <ul>
+                    <li><code>-d</code>: 后台运行容器，并返回容器ID。</li>
+                    <li><code>-it</code>: 以交互模式运行容器，并为容器重新分配一个伪输入终端。</li>
+                    <li><code>--name="container_name"</code>: 为容器指定一个名称。</li>
+                    <li><code>-p &lt;host_port&gt;:&lt;container_port&gt;</code>: 端口映射，将宿主机的端口映射到容器的端口。</li>
+                    <li><code>--rm</code>: 容器退出时自动删除容器。</li>
+                </ul>
+
+                <h3>docker stop 停止容器</h3>
+                <p>该命令用于停止一个或多个正在运行的容器。</p>
+                <pre><code>docker stop [OPTIONS] CONTAINER [CONTAINER...]</code></pre>
+                <p>默认情况下，该命令会先发送一个 `SIGTERM` 信号，如果容器在10秒内没有停止，则会发送 `SIGKILL` 信号。 你可以使用 `-t` 或 `--time` 选项来指定等待时间。</p>
+
+                <h3>docker attach 附加到容器</h3>
+                <p>该命令用于将本地标准输入、输出和错误流附加到一个正在运行的容器上。 这可以让你查看容器的实时输出或与其进行交互。</p>
+                <pre><code>docker attach [OPTIONS] CONTAINER</code></pre>
+                <p>可以使用 `CTRL-p CTRL-q` 组合键来脱离容器而不终止它。</p>
+
+                <h3>docker exec 在容器中执行命令</h3>
+                <p>该命令用于在一个正在运行的容器中执行一个新的命令。 这对于调试、检查或修改正在运行的容器的状态非常有用。</p>
+                <pre><code>docker exec [OPTIONS] CONTAINER COMMAND [ARG...]</code></pre>
+                <p>常用选项：</p>
+                <ul>
+                    <li><code>-i</code>: 即使没有附加也保持STDIN打开。</li>
+                    <li><code>-t</code>: 分配一个伪终端。</li>
+                </ul>
+
+                <h3>docker rm 删除容器</h3>
+                <p>该命令用于删除一个或多个容器。</p>
+                <pre><code>docker rm [OPTIONS] CONTAINER [CONTAINER...]</code></pre>
+                <p>常用选项：</p>
+                <ul>
+                    <li><code>-f</code>: 强制删除一个正在运行的容器。</li>
+                    <li><code>-v</code>: 删除与容器关联的卷。</li>
+                </ul>
+
+                <h2>Dockerfile 编写</h2>
+                <p>Dockerfile 是一个用来构建镜像的文本文档，其中包含了一系列的命令和参数。 以下是一些常用的指令：</p>
+
+                <h3>FROM</h3>
+                <p><code>FROM</code> 指令初始化一个新的构建阶段，并为后续指令设置基础镜像。 因此，一个有效的 Dockerfile 必须以 `FROM` 指令开始。</p>
+                <pre><code>FROM &lt;image&gt;[:&lt;tag&gt;] [AS &lt;name&gt;]</code></pre>
+
+                <h3>COPY</h3>
+                <p><code>COPY</code> 指令用于将文件或目录从构建上下文复制到容器的文件系统中。</p>
+                <pre><code>COPY [--chown=&lt;user&gt;:&lt;group&gt;] &lt;src&gt;... &lt;dest&gt;</code></pre>
+
+                <h3>ADD</h3>
+                <p><code>ADD</code> 指令与 `COPY` 类似，但功能更强大。它不仅可以复制本地文件，还支持从URL下载文件，并能自动解压压缩包。</p>
+                <pre><code>ADD [--chown=&lt;user&gt;:&lt;group&gt;] &lt;src&gt;... &lt;dest&gt;</code></pre>
+                <p><b>注意：</b> Docker 官方建议，如果只是复制本地文件，优先使用 `COPY`，因为它更明确。</p>
+
+                <h3>CMD</h3>
+                <p><code>CMD</code> 指令用于为执行中的容器提供默认的执行命令。<b>一个 Dockerfile 中可以有多个<code>CMD</code>指令，但只有最后一个会生效。</b></p>
+                <p>它有三种格式：</p>
+                <ul>
+                    <li><code>CMD ["executable","param1","param2"]</code> (exec 格式, 这是首选格式)</li>
+                    <li><code>CMD ["param1","param2"]</code> (作为 `ENTRYPOINT` 的默认参数)</li>
+                    <li><code>CMD command param1 param2</code> (shell 格式)</li>
+                </ul>
+
+                <h3>ENTRYPOINT</h3>
+                <p><code>ENTRYPOINT</code> 指令允许你配置一个容器，使其作为一个可执行文件运行。 `docker run` 命令行中传递的参数会被追加到 `ENTRYPOINT` 指令的参数后面。</p>
+                <p>它有两种格式：</p>
+                <ul>
+                    <li><code>ENTRYPOINT ["executable", "param1", "param2"]</code> (exec 格式, 这是首选格式)</li>
+                    <li><code>ENTRYPOINT command param1 param2</code> (shell 格式)</li>
+                </ul>
+                <p>当 `ENTRYPOINT` 和 `CMD` 同时使用时，`CMD` 的指令会作为 `ENTRYPOINT` 的默认参数，并且可以被 `docker run` 命令的参数覆盖。</p>
+
+                <h3>ENV</h3>
+                <p><code>ENV</code> 指令用于设置环境变量。</p>
+                <pre><code>ENV &lt;key&gt;=&lt;value&gt; ...</code></pre>
+
+                <h3>EXPOSE</h3>
+                <p><code>EXPOSE</code> 指令用于声明容器在运行时监听的特定网络端口。 这并不会实际发布端口，只是作为一种文档，告诉使用者这个镜像的服务监听哪个端口。</p>
+                <pre><code>EXPOSE &lt;port&gt; [&lt;port&gt;/&lt;protocol&gt;...]</code></pre>
+
+                <h3>WORKDIR</h3>
+                <p><code>WORKDIR</code> 指令为 Dockerfile 中的任何后续指令（如 `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, `ADD`）设置工作目录。 如果该目录不存在，它将被创建。</p>
+                <pre><code>WORKDIR /path/to/workdir</code></pre>
+
+                <h3>ARG</h3>
+                <p><code>ARG</code> 指令定义了一个变量，用户可以在构建时使用 `--build-arg &lt;varname&gt;=&lt;value&gt;` 标志将其传递给构建器。 这些变量只在构建过程中可用，在镜像构建完成后不会保留。</p>
+                <pre><code>ARG &lt;name&gt;[=&lt;default value&gt;]</code></pre>
+
+                <h3>ONBUILD</h3>
+                <p><code>ONBUILD</code> 指令为镜像添加一个触发器指令，当该镜像被用作另一个构建的基础时，该触发器将被执行。 这些指令就像是父 Dockerfile 给子 Dockerfile 的指令。</p>
+                <pre><code>ONBUILD &lt;INSTRUCTION&gt;</code></pre>
+
+                <h3>VOLUME</h3>
+                <p><code>VOLUME</code> 指令用于创建一个具有指定名称的挂载点，并将其标记为持有来自主机或其他容器的外部挂载卷。</p>
+                <pre><code>VOLUME ["/data"]</code></pre>
             </div>
-            <!-- ========== CSS 互动练习区 结束 ========== -->
+         
+<!-- ========== Git/Docker 互动练习区 开始 ========== -->
+<div class="quiz-section">
+    <h2>Git &amp; Docker 巩固练习</h2>
+    <p>通过下面的选择题，检验一下你对 Git 和 Docker 核心概念的理解吧！</p>
+
+    <form class="quiz-form" onsubmit="return false;">
+        <!-- 问题一：Git 综合操作 -->
+        <div class="quiz-question">
+            <p>问题 1: Git 本地仓库与远程仓库的协同工作</p>
+            <p>小王在本地创建了一个新的Vue项目 `my-vue-app`，他想把这个项目推送到Gitee上一个刚创建好的、完全空白的远程仓库。远程仓库的地址是 `git@gitee.com:wang/my-vue-app.git`。以下哪组命令是完成这个任务的 <strong>最标准、最完整</strong> 的操作流程？</p>
+            <pre><code># 假设小王已经进入了 my-vue-app 文件夹
+# 并且已经执行了 git config 设置了用户名和邮箱
+cd my-vue-app
+</code></pre>
+            <div class="quiz-options">
+                <div>
+                    <input type="radio" id="q1-a" name="q1" value="a">
+                    <label for="q1-a">(A)
+                        <code>git init &amp; git add . &amp; git commit -m "Initial commit" &amp; git push git@gitee.com:wang/my-vue-app.git master</code></label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>这个流程缺少一个关键步骤。在执行 `git push` 之前，Git并不知道远程仓库的存在和它的别名。直接推送一个URL是可行的，但不是标准做法，且没有将远程仓库保存为别名（如 `origin`）以方便后续操作。标准的做法是先用 `git remote add` 添加远程仓库。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q1-b" name="q1" value="b">
+                    <label for="q1-b">(B)
+                        <code>git init &amp; git remote add origin git@gitee.com:wang/my-vue-app.git &amp; git add . &amp; git commit -m "Initial commit" &amp; git push -u origin master</code></label>
+                    <div class="feedback correct">
+                        <strong>回答正确！</strong><br>
+                        <strong>解析：</strong>这是最标准的工作流程，覆盖了多个核心知识点：
+                        <br>1. <code>git init</code>: 在本地目录中创建一个新的 Git 仓库。
+                        <br>2. <code>git remote add origin &lt;url&gt;</code>: 将远程仓库地址添加进来，并命名为 `origin`，这是社区的通用规范。
+                        <br>3. <code>git add .</code>: 将当前目录下所有文件的更改添加到暂存区。
+                        <br>4. <code>git commit -m "..."</code>: 将暂存区的更改提交到本地仓库，并附上提交信息。
+                        <br>5. <code>git push -u origin master</code>: 将本地的 `master` 分支推送到名为 `origin` 的远程仓库。<code>-u</code> 参数会建立本地分支与远程分支的追踪关系，这样未来再推送时，只需要简单地使用 <code>git push</code> 即可。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q1-c" name="q1" value="c">
+                    <label for="q1-c">(C)
+                        <code>git clone git@gitee.com:wang/my-vue-app.git . &amp; git add . &amp; git commit -m "Initial commit" &amp; git push</code></label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>`git clone` 命令用于从一个 <strong>已有内容</strong> 的远程仓库下载项目。题目中明确指出远程仓库是“完全空白的”，对一个空仓库执行 `git clone` 会收到警告并且克隆下来的是一个空目录，这不符合将本地已有项目上传的需求。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q1-d" name="q1" value="d">
+                    <label for="q1-d">(D)
+                        <code>git init &amp; git add . &amp; git push -u origin master &amp; git commit -m "Initial commit"</code></label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>这个命令顺序是错误的。<code>git push</code>
+                        是用来推送提交（commits）的，必须在执行 `git commit` 之后才能使用。在没有任何提交的情况下，推送操作是没有意义的，Git会报错提示没有内容可以推送。
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <!-- 问题二：Docker 镜像与容器核心概念 -->
+        <div class="quiz-question">
+            <p>问题 2: Docker 镜像(Image)与容器(Container)的核心区别</p>
+            <p>小李正在学习Docker，他对镜像和容器的概念有些困惑。根据课程资料，以下关于镜像和容器的描述，哪一个是 <strong>最准确</strong> 的？</p>
+            <pre><code># Dockerfile 片段
+FROM python:3.9-slim
+RUN pip install flask
+COPY ./app /app
+CMD ["python", "/app/main.py"]
+</code></pre>
+            <div class="quiz-options">
+                <div>
+                    <input type="radio" id="q2-a" name="q2" value="a">
+                        <label for="q2-a">(A) 镜像是动态的，包含了操作系统内核；容器是静态的，是镜像的只读模板。</label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>这个描述完全说反了。镜像是静态的、只读的模板。容器才是动态的、运行中的实例。此外，根据资料，Docker镜像本身不包含操作系统内核，而是所有容器共享宿主机的内核。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q2-b" name="q2" value="b">
+                    <label for="q2-b">(B) 运行一个容器（`docker run`）时，对文件系统的任何修改都会直接写入原始镜像中，方便下次使用。</label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>这是一个核心误区。镜像是只读的。当容器运行时，Docker会在镜像的只读层之上创建一个可写的“容器层”。所有对文件系统的修改（如创建日志文件、用户上传等）都发生在这个可写层，而不会影响原始镜像。如果要保存修改，需要使用 `docker commit` 创建一个新镜像。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q2-c" name="q2" value="c">
+                    <label for="q2-c">(C) 镜像是一个包含了应用运行所需环境（代码、库、环境变量）的只读模板，而容器是该镜像的一个可运行实例，它共享宿主机的内核并在镜像之上增加了一个可写层。</label>
+                    <div class="feedback correct">
+                        <strong>回答正确！</strong><br>
+                        <strong>解析：</strong>这个描述准确地概括了两者关系。
+                        <br>• <b>镜像 (Image)</b>: 是静态的、只读的构建块，如同一个软件安装包，里面打包了代码、运行时、库等所有依赖，但不包含内核。
+                        <br>• <b>容器 (Container)</b>: 是动态的，由镜像创建的运行实例。它启动速度快，因为不需要启动完整的操作系统，而是巧妙地共享宿主机的操作系统内核。容器在镜像基础上增加了一个可写层来处理动态数据。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q2-d" name="q2" value="d">
+                    <label for="q2-d">(D) 一个镜像只能启动一个容器，如果想同时运行多个实例，必须构建多个完全相同的镜像。</label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>不正确。镜像是模板，就像一个“类”或“模具”，可以被用来创建任意多个容器实例。例如，你可以使用同一个 `nginx:latest` 镜像，通过执行多次 `docker run` 命令来启动几十个相互隔离的 Nginx 容器。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 问题三：Dockerfile 指令辨析 -->
+        <div class="quiz-question">
+            <p>问题 3: Dockerfile 指令辨析 (ENTRYPOINT vs CMD)</p>
+            <p>小张正在为一个Vue+Django项目编写后端Dockerfile，他希望将容器作为一个可执行程序来运行，并能方便地在启动时传递附加参数（例如数据库迁移命令）。以下关于 `ENTRYPOINT` 和 `CMD` 的组合用法，哪种方案 <strong>最能满足</strong> 他的需求？</p>
+            <pre><code># 目标: 运行 'python manage.py runserver 0.0.0.0:8000' 作为默认命令
+# 同时允许用户通过 'docker run my-django-app makemigrations' 来执行数据库迁移
+</code></pre>
+            <div class="quiz-options">
+                <div>
+                    <input type="radio" id="q3-a" name="q3" value="a">
+                    <label for="q3-a">(A) <code>CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]</code></label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>只使用 `CMD` 可以设置默认命令，但不够灵活。如果用户在 `docker run`
+                        后提供了其他命令（如 `makemigrations`），整个 `CMD` 指令会被完全覆盖，用户必须输入完整的 `python manage.py makemigrations`，不够便捷。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q3-b" name="q3" value="b">
+                    <label for="q3-b">(B) <code>ENTRYPOINT ["python", "manage.py", "runserver", "0.0.0.0:8000"]</code></label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>只使用 `ENTRYPOINT` 会将容器变为一个固定的可执行程序。`docker run`
+                        后提供的任何参数都会被追加到 `ENTRYPOINT` 指令的末尾。例如，执行 `docker run my-django-app makemigrations`
+                        时，实际命令会变成 `python manage.py runserver 0.0.0.0:8000 makemigrations`，这会导致命令执行错误。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q3-c" name="q3" value="c">
+                    <label for="q3-c">(C)
+                        <code>ENTRYPOINT ["python", "manage.py"]</code> <br>
+                        <code>CMD ["runserver", "0.0.0.0:8000"]</code></label>
+                    <div class="feedback correct">
+                        <strong>回答正确！</strong><br>
+                        <strong>解析：</strong>这是 `ENTRYPOINT` 和 `CMD` 配合使用的经典场景，也是最佳实践。
+                        <br>• <code>ENTRYPOINT</code> 指定了容器的基础命令（固定的部分）。
+                        <br>• <code>CMD</code> 提供了这个基础命令的默认参数（可变的部分）。
+                        <br>当执行 <code>docker run my-django-app</code> 时，`CMD` 的内容会作为参数传递给 `ENTRYPOINT`，组合成默认命令：<code>python manage.py runserver 0.0.0.0:8000</code>。
+                        <br>当执行 <code>docker run my-django-app makemigrations</code> 时，`run` 命令的参数 `makemigrations` 会覆盖掉 `CMD` 的内容，与 `ENTRYPOINT` 组合成新命令：<code>python manage.py makemigrations</code>。这完美地满足了需求。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q3-d" name="q3" value="d">
+                    <label for="q3-d">(D)
+                        <code>CMD ["python", "manage.py"]</code> <br>
+                        <code>ENTRYPOINT ["runserver", "0.0.0.0:8000"]</code></label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>这个组合是错误的。`ENTRYPOINT` 应该是可执行文件部分。将 `runserver`
+                        作为 `ENTRYPOINT` 会导致系统试图直接执行一个名为 `runserver` 的程序，但它实际上是 `manage.py` 的一个参数，因此会失败。
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 问题四：Docker 网络与端口映射 -->
+        <div class="quiz-question">
+            <p>问题 4: Docker 网络与端口映射</p>
+            <p>小红在容器中运行了一个Vue开发服务器，该服务器在容器内部监听 `8080` 端口。她的 `Dockerfile` 中包含了 `EXPOSE 8080`
+                指令。现在她希望通过访问自己电脑（宿主机）的 `http://localhost:3000` 来访问这个Vue应用。以下哪个 `docker run` 命令是正确的？</p>
+            <pre><code># Dockerfile 包含
+EXPOSE 8080
+
+# 镜像名为 vue-dev-server
+</code></pre>
+            <div class="quiz-options">
+                <div>
+                    <input type="radio" id="q4-a" name="q4" value="a">
+                    <label for="q4-a">(A) <code>docker run -p 8080:3000 vue-dev-server</code></label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>端口映射的格式是 <code>-p &lt;host_port&gt;:&lt;container_port&gt;</code>。这个选项将宿主机的
+                        8080 端口映射到了容器的 3000 端口，与题目的要求“访问宿主机的3000端口”和“容器内监听8080端口”正好相反。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q4-b" name="q4" value="b">
+                    <label for="q4-b">(B) <code>docker run vue-dev-server</code></label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>不正确。`Dockerfile` 中的 `EXPOSE 8080`
+                        指令仅仅是一个声明或文档，它告诉使用者这个镜像的服务期望在哪个端口上通信。它本身并不会自动将容器的端口发布到宿主机上。必须使用 `-p` 或 `-P` 参数才能实现端口映射。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q4-c" name="q4" value="c">
+                    <label for="q4-c">(C) <code>docker run -d -p 3000:8080 --name my-vue-app vue-dev-server</code></label>
+                    <div class="feedback correct">
+                        <strong>回答正确！</strong><br>
+                        <strong>解析：</strong>这个命令包含了所有必要的元素：
+                        <br>• <code>-p 3000:8080</code>: 准确地将宿主机的 3000 端口映射到容器的 8080 端口，符合 <code>&lt;host_port&gt;:&lt;container_port&gt;</code> 的格式。
+                        <br>• <code>-d</code>: 让容器在后台（detached mode）运行，这对于长时间运行的服务（如Web服务器）是标准做法。
+                        <br>• <code>--name my-vue-app</code>: 为容器指定一个易于记忆的名称，方便后续通过名字（而不是ID）来管理它（如 `docker stop my-vue-app`）。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q4-d" name="q4" value="d">
+                    <label for="q4-d">(D) <code>docker exec -p 3000:8080 my-vue-app</code></label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong><code>docker exec</code> 命令用于在一个 <strong>已经运行</strong>
+                        的容器中执行新的命令，它不能用来启动容器或设置端口映射。端口映射必须在容器创建时（即使用 `docker run` 命令时）指定。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 问题五：Docker 容器管理与调试 -->
+        <div class="quiz-question">
+            <p>问题 5: Docker 容器管理与调试</p>
+            <p>小明使用 <code>docker run -d --name my_api_server my_api_image</code> 命令在后台启动了一个 Django API
+                服务器容器。几秒后，他发现无法访问API。他怀疑容器启动失败，需要进入容器内部的 `/bin/bash`
+                环境来查看日志文件和配置。以下哪个命令可以帮助他实现这个目标？</p>
+            <pre><code># 容器正在后台运行（或已尝试运行后退出）
+# 容器名称: my_api_server
+</code></pre>
+            <div class="quiz-options">
+                <div>
+                    <input type="radio" id="q5-a" name="q5" value="a">
+                    <label for="q5-a">(A) <code>docker attach my_api_server</code></label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong><code>docker attach</code>
+                        用于附加到容器的 <strong>主进程</strong>
+                        的标准输入/输出流。对于一个后台服务，这通常只会显示服务的日志流，并不能提供一个可以交互的shell来执行新命令。更重要的是，如果用 `CTRL-C`
+                        退出，很可能会终止容器的主进程。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q5-b" name="q5" value="b">
+                    <label for="q5-b">(B) <code>docker run -it my_api_image /bin/bash</code></label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>这个命令会使用 `my_api_image` 镜像 <strong>启动一个全新的容器</strong>，并进入其
+                        shell。虽然可以用来检查镜像内容，但无法调试原来那个名为 `my_api_server` 的、可能已经失败的容器的特定状态、日志或运行时产生的文件。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q5-c" name="q5" value="c">
+                    <label for="q5-c">(C) <code>docker exec -it my_api_server /bin/bash</code></label>
+                    <div class="feedback correct">
+                        <strong>回答正确！</strong><br>
+                        <strong>解析：</strong><code>docker exec</code> 是专门用于在 <strong>一个正在运行的容器中</strong>
+                        执行新命令的工具，是调试容器内部状态的最佳选择。
+                        <br>• <code>exec</code>: 表示执行新命令。
+                        <br>• <code>-i</code>: (interactive) 保持标准输入打开，允许你输入命令。
+                        <br>• <code>-t</code>: (tty) 分配一个伪终端，提供一个交互式的命令行界面。
+                        <br>• <code>my_api_server</code>: 目标容器的名称。
+                        <br>• <code>/bin/bash</code>: 你想在容器内执行的新命令。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q5-d" name="q5" value="d">
+                    <label for="q5-d">(D) <code>docker stop my_api_server && docker run -it my_api_server /bin/bash</code></label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>这个流程是错误的。首先，`docker stop`
+                        会停止容器，破坏了需要调试的现场。其次，`docker run` 的参数应该是镜像名 (`my_api_image`) 而不是容器名 (`my_api_server`)。这个命令组合无法达到调试目的。
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 问题六：Docker 多阶段构建与镜像优化 -->
+        <div class="quiz-question">
+            <p>问题 6: Docker 多阶段构建与镜像优化</p>
+            <p>在部署Vue-Django项目时，为了优化前端镜像，我们通常不希望最终的Nginx镜像中包含Node.js环境、`node_modules`
+                等庞大的构建依赖。以下哪个 `Dockerfile` 写法是实现这一目标的 <strong>最佳实践</strong>？</p>
+            <pre><code># 目标: 创建一个只包含编译后Vue静态文件和Nginx的轻量级生产镜像
+</code></pre>
+            <div class="quiz-options">
+                <div>
+                    <input type="radio" id="q6-a" name="q6" value="a">
+                    <label for="q6-a">(A) 在一个 `Dockerfile` 中先安装Node.js，执行 `npm run build`，然后用 `rm -rf` 删除
+                        `node_modules` 和Node.js。</label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>虽然看似可行，但这种方法效率低下且效果不佳。Docker
+                        镜像是分层的，即使你在后续的层中删除了文件，这些文件在之前的层中依然存在，导致最终镜像体积不会减小。这是镜像构建中应避免的常见错误。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q6-b" name="q6" value="b">
+                    <label for="q6-b">(B)
+                        <pre><code># Stage 1: Build aplication
+FROM node:18 AS builder
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Stage 2: Create production image
+FROM nginx:latest
+COPY --from=builder /app/dist /usr/share/nginx/html</code></pre>
+                    </label>
+                    <div class="feedback correct">
+                        <strong>回答正确！</strong><br>
+                        <strong>解析：</strong>这正是 <strong>多阶段构建 (Multi-stage builds)</strong>
+                        的经典应用，是现代Docker镜像优化的核心技术。
+                        <br>1. <b>第一阶段 (builder)</b>: 使用包含完整Node.js环境的 `node:18`
+                        镜像，完成所有构建工作（安装依赖、编译代码）。这个阶段会产生一个包含所有构建工具和中间产物的临时环境。
+                        <br>2. <b>第二阶段 (production)</b>: 从一个全新的、轻量级的 `nginx`
+                        基础镜像开始。关键在于 <code>COPY --from=builder</code>
+                        这一行，它允许我们只从前一阶段（builder）中复制出我们真正需要的构建产物（`/app/dist` 目录），而完全抛弃了第一阶段的整个环境（包括Node.js,
+                        `node_modules`等）。
+                        <br>最终得到的镜像既小又安全，只包含了运行应用所必需的文件。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q6-c" name="q6" value="c">
+                    <label for="q6-c">(C) 编写两个 `Dockerfile`，一个用于构建，一个用于生产。手动执行第一个 `docker build`，然后用
+                        `docker cp` 从容器中复制出 `dist` 文件夹，再执行第二个 `docker build`。</label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>这个手动流程虽然能达到目的，但非常繁琐且难以自动化，不符合现代CI/CD（持续集成/持续部署）的理念。多阶段构建将这个过程整合到了一个 `Dockerfile` 中，使其更优雅、更易于管理和自动化。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q6-d" name="q6" value="d">
+                    <label for="q6-d">(D)
+                        <pre><code>FROM nginx:latest
+RUN apt-get update && apt-get install -y nodejs npm
+WORKDIR /app
+COPY . .
+RUN npm install && npm run build
+COPY --from=/app/dist /usr/share/nginx/html</code></pre>
+                    </label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>这个 `Dockerfile`
+                        试图在一个基于Nginx的镜像中安装Node.js并进行构建。这会导致最终的生产镜像既包含Nginx，又包含完整的Node.js构建环境，体积会非常庞大，违背了镜像优化的初衷。`COPY --from=`
+                        的语法也用错了，它需要指定一个构建阶段的名称。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 问题七：Kubernetes 基础概念 -->
+        <div class="quiz-question">
+            <p>问题 7: Kubernetes(K8s) 基础概念</p>
+            <p>当我们将一个容器化的Vue-Django应用部署到Kubernetes集群时，我们需要管理前端和后端两个不同的容器。根据课程资料对Kubernetes的介绍，以下哪个描述是 <strong>最准确</strong> 的？</p>
+            <pre><code># 概念回顾
+# pod：Kubernetes中的最小调度和管理单位，包含一个或多个共享资源的容器。
+</code></pre>
+            <div class="quiz-options">
+                <div>
+                    <input type="radio" id="q7-a" name="q7" value="a">
+                    <label for="q7-a">(A) 为了简化管理，最佳实践是把Vue前端容器和Django后端容器打包到同一个镜像中运行。</label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>这是反模式（anti-pattern）。将前端和后端打包在同一个镜像中，会使镜像变得臃肿，并且违背了“关注点分离”的微服务原则。这两个部分有不同的依赖、生命周期和扩展需求，应该保持为独立的镜像。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q7-b" name="q7" value="b">
+                    <label for="q7-b">(B) 在Kubernetes中，我们直接管理和调度单个容器（Container），而不是其他单位。</label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>不正确。根据资料，Kubernetes的最小调度和管理单位是 <strong>Pod</strong>，而不是容器。K8s不会单独调度一个容器，它总是将容器包装在Pod中进行管理。这是一个核心概念。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q7-c" name="q7" value="c">
+                    <label for="q7-c">(C) Vue前端容器和Django后端容器应该放在同一个Pod中，因为Pod可以包含多个容器。</label>
+                    <div class="feedback incorrect">
+                        <strong>解析：</strong>虽然Pod可以包含多个容器，但通常只在这些容器需要紧密耦合、共享网络和存储（例如，一个主应用和一个日志收集的“边车”sidecar容器）时才这样做。Vue前端和Django后端是两个独立的服务，它们有独立的扩展和更新需求，将它们放在同一个Pod中会导致管理上的困难。例如，你无法单独扩展后端服务的实例数量。
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" id="q7-d" name="q7" value="d">
+                    <label for="q7-d">(D) 通常情况下，Vue前端容器和Django后端容器会分别放在各自的Pod中，并由不同的Deployment来管理，以便它们可以被独立地扩展、更新和监控。</label>
+                    <div class="feedback correct">
+                        <strong>回答正确！</strong><br>
+                        <strong>解析：</strong>这是在Kubernetes中部署多服务应用的典型和标准模式。
+                        <br>• <b>独立的Pod</b>: 每个服务（前端、后端、数据库等）都运行在自己的Pod中。
+                        <br>• <b>独立的Deployment</b>:
+                        每个Pod都由一个Deployment资源来控制。这使得我们可以独立地管理每个服务的副本数量（水平扩展）、执行滚动更新或回滚版本，而不会影响到其他服务。
+                        <br>• <b>服务发现</b>:
+                        然后通过Kubernetes的Service资源让这些独立的Pod能够相互通信。这种架构提供了最大的灵活性和可伸缩性。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<!-- ========== Git/Docker 互动练习区 结束 ========== -->
+        </div>
+        </div>
 </template>
 
 <script setup>
@@ -812,6 +635,13 @@ code {
     border-radius: 4px;
     white-space: pre-wrap;
     /* 保证代码能换行 */
+}
+
+pre {
+    background-color: #f6f8fa;
+    padding: 10px;
+    border-radius: 4px;
+    white-space: pre-wrap;
 }
 
 .quiz-options label {

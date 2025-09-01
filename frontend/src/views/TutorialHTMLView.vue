@@ -3,7 +3,7 @@
     <NavBar></NavBar>
     <!-- 增加一个容器并设置一些内边距，避免内容紧贴浏览器边缘 -->
     <div class="content-container">
-      <h1>HTML 介绍</h1>
+      <h1>HTML/CSS 介绍</h1>
       <!-- 加载与错误状态处理 -->
       <div v-if="loading">加载中...</div>
       <div v-else-if="error">{{ error }}</div>

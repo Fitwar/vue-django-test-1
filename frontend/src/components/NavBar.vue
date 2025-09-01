@@ -32,7 +32,7 @@
         </a>
         <ul class="dropdown-menu">
           <li><a href="/tutorial/html">HTML/CSS/JS</a></li>
-          <li><a href="/tutorial/git">Git</a></li>
+          <li><a href="/tutorial/git">Git/Docker</a></li>
           <li><a href="#">Vue</a></li>
         </ul>
       </li>
