@@ -28,6 +28,13 @@
                 <p>现在Github上创建仓库，<b>注意：master是主分支，不是仓库名。仓库名需要手动命名！</b></p>
                 <p><code>git clone &lt;remote_url&gt; [local_dir_name]</code></p>
                 <p><code>cd ./master</code></p>
+                <p>由于Github无法直接连接，改用SSH连接方式：</p>
+                <p><code>ssh-keygen -t ed25519 -C "854892795@qq.com"</code> # 生成SSH密钥</p>
+                <p>按三次回车，生成一个SSH密钥。然后查看：</p>
+                <p><code>Get-Content ~\.ssh\id_ed25519.pub</code> # 显示公钥</p>
+                <p>最后，登录GitHub → Settings → SSH and GPG keys → New SSH key，粘贴公钥内容，添加公钥。</p>
+                <p><code>git remote set-url origin git@github.com:Fitwar/vue-django-test-1.git</code> # </p>
+
 
                 <p>方案二：本地初始化仓库并添加远程链接：</p>
                 <p><code>git init</code> #初始化仓库</p>
