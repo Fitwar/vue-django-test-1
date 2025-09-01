@@ -3,55 +3,49 @@ name: Build and Deploy to Local K8s
 on:
   push:
     branches:
-      - master  # 1. 已修正：分支名称从 main 改为 master
+      - master
 
 jobs:
   build-and-deploy:
     runs-on: self-hosted
+    
+    # 指定所有步骤默认使用PowerShell
+    defaults:
+      run:
+        shell: pwsh
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. 已修正：指定使用bash并更新为新的输出语法
+      # 1. 使用 PowerShell 语法获取日期并设置输出
       - name: Get current date for image tag
         id: date
-        shell: bash
-        run: echo "date=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+        run: echo "date=$(Get-Date -Format "yyyyMMddHHmmss")" >> $env:GITHUB_OUTPUT
 
       - name: Build Backend Docker Image
-        shell: bash
         run: |
           docker build -t backend-image:latest -t backend-image:${{ steps.date.outputs.date }} ./backend
         
       - name: Build Frontend Docker Image
-        shell: bash
         run: |
           docker build -t frontend-image:latest -t frontend-image:${{ steps.date.outputs.date }} ./frontend
 
       - name: Apply K8s Manifests
-        shell: bash
         run: |
-          # 确保命名空间存在，-f 应用文件夹下所有 yaml
           kubectl apply -f k8s/
       
-      # 3. 已修正：使用正确的命令来更新主容器和initContainer
+      # 2. kubectl命令在PowerShell中同样适用
       - name: Update Backend Deployment Image
-        shell: bash
         run: |
-          # 更新主 'backend' 容器的镜像
           kubectl set image deployment/backend-deployment backend=backend-image:${{ steps.date.outputs.date }} -n vue-django-app
-          
-          # 使用 'patch' 命令来更新 'db-migration' initContainer 的镜像
           kubectl patch deployment backend-deployment -n vue-django-app --patch '{"spec":{"template":{"spec":{"initContainers":[{"name": "db-migration", "image":"backend-image:${{ steps.date.outputs.date }}"}]}}}}'
 
       - name: Update Frontend Deployment Image
-        shell: bash
         run: |
           kubectl set image deployment/frontend-deployment frontend=frontend-image:${{ steps.date.outputs.date }} -n vue-django-app
 
       - name: Verify Deployment Rollout
-        shell: bash
         run: |
           echo "Verifying backend rollout..."
           kubectl rollout status deployment/backend-deployment -n vue-django-app
