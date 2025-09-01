@@ -33,7 +33,10 @@
                 <p>按三次回车，生成一个SSH密钥。然后查看：</p>
                 <p><code>Get-Content ~\.ssh\id_ed25519.pub</code> # 显示公钥</p>
                 <p>最后，登录GitHub → Settings → SSH and GPG keys → New SSH key，粘贴公钥内容，添加公钥。</p>
-                <p><code>git remote set-url origin git@github.com:Fitwar/vue-django-test-1.git</code> # </p>
+                <p><code>git remote set-url origin git@github.com:Fitwar/vue-django-test-1.git</code> # 设置远程仓库链接</p>
+                <p>注意对比HTTPS和SSH的区别：<code>https://github.com/Fitwar/vue-django-test-1</code></p>
+                <p><code>git push -u origin "master"</code> # 第一次推送时需要使用-u参数指定远程分支</p>
+
 
 
                 <p>方案二：本地初始化仓库并添加远程链接：</p>

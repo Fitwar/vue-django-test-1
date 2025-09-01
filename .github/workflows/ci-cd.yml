@@ -1,0 +1,49 @@
+name: Build and Deploy to Local K8s
+
+on:
+  push:
+    branches:
+      - master # 当代码推送到 master 分支时触发
+
+jobs:
+  build-and-deploy:
+    # 关键：指定运行在我们的自托管 Runner 上
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get current date for image tag
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"
+
+      - name: Build Backend Docker Image
+        run: |
+          docker build -t backend-image:latest -t backend-image:${{ steps.date.outputs.date }} ./backend
+        
+      - name: Build Frontend Docker Image
+        run: |
+          docker build -t frontend-image:latest -t frontend-image:${{ steps.date.outputs.date }} ./frontend
+
+      - name: Apply K8s Manifests
+        run: |
+          # 确保命名空间存在，-f 应用文件夹下所有 yaml
+          kubectl apply -f k8s/
+      
+      - name: Update Backend Deployment Image
+        run: |
+          # 使用 kubectl set image 命令来触发滚动更新
+          kubectl set image deployment/backend-deployment backend=backend-image:${{ steps.date.outputs.date }} -n vue-django-app
+          kubectl set image deployment/backend-deployment db-migration=backend-image:${{ steps.date.outputs.date }} -n vue-django-app -c initContainers
+
+      - name: Update Frontend Deployment Image
+        run: |
+          kubectl set image deployment/frontend-deployment frontend=frontend-image:${{ steps.date.outputs.date }} -n vue-django-app
+
+      - name: Verify Deployment Rollout
+        run: |
+          echo "Verifying backend rollout..."
+          kubectl rollout status deployment/backend-deployment -n vue-django-app
+          echo "Verifying frontend rollout..."
+          kubectl rollout status deployment/frontend-deployment -n vue-django-app

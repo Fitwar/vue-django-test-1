@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: vue-django-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      # Init Container 用于在主应用启动前执行数据库迁移
+      initContainers:
+        - name: db-migration
+          image: backend-image:latest # 使用将要构建的镜像
+          imagePullPolicy: IfNotPresent # 因为镜像是在本地构建的，所以设置此策略
+          command: ["python", "manage.py", "migrate"]
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SECRET_KEY
+            - name: DB_NAME
+              value: "ex2"
+            - name: DB_USER
+              value: "root"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: DB_PASSWORD
+            - name: DB_HOST
+              value: "mysql-service" # 指向MySQL的服务名
+            - name: DB_PORT
+              value: "3306"
+      containers:
+        - name: backend
+          image: backend-image:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: SECRET_KEY
+            - name: DB_NAME
+              value: "ex2"
+            - name: DB_USER
+              value: "root"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: DB_PASSWORD
+            - name: DB_HOST
+              value: "mysql-service"
+            - name: DB_PORT
+              value: "3306"
+            # 允许所有主机访问，在生产环境中应配置为更具体的值
+            - name: DJANGO_ALLOWED_HOSTS
+              value: "*"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: vue-django-app
+spec:
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
